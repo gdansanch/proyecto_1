@@ -17,3 +17,5 @@ Imprime el texto en la salida estándar.  
 • int fprintf (stderr, “Texto”...)  
 
 Imprime el texto en la salida error estándar.  
+
+
