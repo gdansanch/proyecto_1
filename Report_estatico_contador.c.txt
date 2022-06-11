@@ -1,0 +1,217 @@
+(C) Programming Research Ltd
+
+
+
+#include <stdio.h>
+
+Msg(99:5124) Unknown error --- FALSO POSITIVO
+
+#include <stdlib.h>
+
+int main (argc, argv)
+
+    ^
+
+Msg(3:3002) Defining 'main()' with an identifier list and separate parameter declarations is an obsolescent feature. --- FALSO POSITIVO. Se tendrá que hacer ajuste en el analizador a la versión correspondiente.
+
+REFERENCE - ISO:C90-6.9.5 Future Language Directions
+
+    int argc;
+
+    char *argv[];
+
+{
+
+    int c, i, inword;
+
+Msg(99:5013) Unknown error --- FALSO POSITIVO. Información faltante. 
+
+    FILE *fp;
+
+    long linect, wordct, charct;
+
+Msg(99:5013) Unknown error --- FALSO POSITIVO. Información faltante. 
+
+    long tlinect = 1, twordct = 1, tcharct = 1;
+
+Msg(99:5013) Unknown error
+
+    i = 1;
+
+    do {
+
+        if (argc > 1 && (fp=fopen(argv[i], "r")) == NULL) {
+
+            ^
+
+Msg(2:3397) Extra parentheses recommended. A binary operation is the operand of a binary operator with different precedence. --- FALSO POSITIVO. Operación correct. Es solo recomendación.
+
+-->(0:3390)   Expression is equivalent to: "(argc > 1) && ((fp = fopen(argv[i],r)) == ((void*)0))"
+
+Msg(2:3400) Extra parentheses recommended. A binary operation is the operand of a logical && or ||. --- FALSO POSITIVO. Operación correcta. Es solo recomendación.
+
+                           ^
+
+Msg(3:3326) The result of an assignment is being used in a logical operation. --- FALSO POSITIVO. Operación correct. Es solo recomendación. Se puede realizar la operación fuera de la estructura de desición.
+
+Msg(2:3415) Right hand operand of '&&' or '||' is an expression with possible side effects.
+
+REFERENCE - ISO:C90-5,1,2,3 Program Execution
+
+                                           ^
+
+Msg(2:3415) Right hand operand of '&&' or '||' is an expression with possible side effects.
+
+REFERENCE - ISO:C90-5,1,2,3 Program Execution
+
+            fprintf (stdout, "can't open %s\n", argv[i]);
+
+            ^
+
+Msg(2:3200) 'fprintf' returns a value which is not being used.
+
+            exit (1);
+
+            ^
+
+Msg(99:5126) Unknown error --- FALSO POSITIVO. Información faltante. 
+
+        }
+
+        linect = wordct = charct = 0;
+
+        inword = 0;
+
+        while ((c = getc(fp)) != EOF) {
+
+                  ^
+
+Msg(3:3326) The result of an assignment is being used in a logical operation.
+
+            ++charct;
+
+            if (c == '\n')
+
+                  ^
+
+Msg(2:1881) The operands of this equality operator are expressions of different 'essential type' categories (signed and char).
+
+                ++linect;
+
+                ^
+
+Msg(2:2212) Body of control statement is not enclosed within braces.
+
+            if (c == ' ' || c == '\t' || c == '\n')
+
+                ^
+
+Msg(2:3397) Extra parentheses recommended. A binary operation is the operand of a binary operator with different precedence.
+
+-->(0:3390)   Expression is equivalent to: "((c == 32) || (c == 9)) || (c == 10)"
+
+Msg(2:3400) Extra parentheses recommended. A binary operation is the operand of a logical && or ||.
+
+                  ^
+
+Msg(2:1881) The operands of this equality operator are expressions of different 'essential type' categories (signed and char).
+
+                              ^
+
+Msg(2:1881) The operands of this equality operator are expressions of different 'essential type' categories (signed and char).
+
+                                           ^
+
+Msg(2:1881) The operands of this equality operator are expressions of different 'essential type' categories (signed and char).
+
+                inword = 0;
+
+                ^
+
+Msg(2:2212) Body of control statement is not enclosed within braces.
+
+            else if (inword == 0) {
+
+                 ^
+
+Msg(2:2004) No concluding 'else' exists in this 'if'-'else'-'if' statement.
+
+                inword = 1;
+
+                ++wordct;
+
+            }
+
+        }
+
+        printf("%7ld %7ld %7ld", linect, wordct, charct);
+
+        ^
+
+Msg(2:3200) 'printf' returns a value which is not being used.
+
+        if (argc > 1)
+
+            printf(" %s\n", *argv);
+
+            ^
+
+Msg(2:2212) Body of control statement is not enclosed within braces.
+
+Msg(2:3200) 'printf' returns a value which is not being used.
+
+        else
+
+            printf("\n");
+
+            ^
+
+Msg(2:2212) Body of control statement is not enclosed within braces.
+
+Msg(2:3200) 'printf' returns a value which is not being used.
+
+        fclose(fp);
+
+        ^
+
+Msg(2:3200) 'fclose' returns a value which is not being used.
+
+        tlinect += linect;
+
+        twordct += wordct;
+
+        tcharct += charct;
+
+    } while (++i < argc);
+
+             ^
+
+Msg(2:3440) Using the value resulting from a ++ or -- operation.
+
+REFERENCE - ISO:C90-6.3.2.4 Postfix Increment and Decrement Operators, ISO:C90-6.3.3.1 Prefix Increment and Decrement Operators
+
+    if (argc > 1)
+
+        printf("%7ld %7ld %7ld total\n", linect, twordct, tcharct);
+
+        ^
+
+Msg(2:2212) Body of control statement is not enclosed within braces.
+
+Msg(2:3200) 'printf' returns a value which is not being used.
+
+    exit(0); 
+
+    ^
+
+Msg(99:5126) Unknown error --- FALSO POSITIVO. Información faltante. 
+
+}
+
+ ^
+
+Msg(7:0914) [U] Source file does not end with a newline character.
+
+REFERENCE - ISO:C90-5.1.1.2 Translation Phases
+
+
